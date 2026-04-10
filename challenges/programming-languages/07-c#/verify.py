@@ -1,6 +1,7 @@
 
 import pathlib
 import urllib.request
+from urllib.parse import quote
 from functools import cache
 import json
 
@@ -21,7 +22,8 @@ def find_root():
 @cache
 def determine_relative_path():
     root = find_root()
-    return "/".join(find_test_path().relative_to(root).parts)
+    path_string = "/".join(find_test_path().relative_to(root).parts)
+    return quote(path_string, safe="/")
 
 def load_solution():
     path = find_test_path() / "solution.txt"
