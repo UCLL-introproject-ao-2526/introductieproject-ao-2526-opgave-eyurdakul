@@ -1,3 +1,3 @@
 # Balatro
 
-In which programming language is Balatro written?
+In which programming language is Slay the spire written?
