@@ -1,0 +1,28 @@
+Reflectie bij video
+https://www.youtube.com/watch?v=hG9SzQxaCm8
+
+De video behandelt de complexe wiskunde en fysica achter een fundamenteel aspect van game development: de sprongbeweging. 
+De spreker legt uit dat een realistische sprong niet zomaar een verplaatsing is, maar een simulatie van krachten.
+
+Ten eerste benadrukt de spreker dat een sprong altijd afhankelijk is van de zwaartekracht. Om een sprong te berekenen, 
+moet je de omgeving simuleren waarin een neerwaartse versnelling constant inwerkt op het spelersmodel. Ten tweede wordt 
+het belang van parabolen uitgelegd. Omdat een sprong wiskundig gezien een parabool beschrijft, zijn de parameters snelheid, 
+afstand en tijd tot het hoogste punt cruciaal. Doordat parabolen symmetrisch zijn, is de weg omhoog in de basis een 
+spiegelbeeld van de weg omlaag.
+
+Ten derde bespreekt de spreker dat 'game-fysica' niet hetzelfde hoeft te zijn als de werkelijke natuurkunde. Een iconisch 
+voorbeeld is Super Mario Bros, waarbij de zwaartekracht verdubbelt zodra de speler het hoogste punt bereikt. Dit zorgt voor 
+een responsiever gevoel ("snappy feel") omdat het personage minder zweeft. Ten vierde wordt de link met input-controls 
+uitgelegd: de hoogte van een sprong kan variëren afhankelijk van hoe lang een speler een toets ingedrukt houdt. Tot slot 
+vergelijkt de spreker diverse integratiemethodes om de positie te berekenen. Hoewel de Euler-methode het simpelst is, 
+wordt de 'Velocity Verlet'-methode aangeraden als de meest stabiele en populaire keuze voor betrouwbare bewegingen in games.
+
+Ik vond de presentatiestijl van de spreker erg prettig; hij slaagt erin om droge wiskundige formules visueel en begrijpelijk 
+te maken door direct voorbeelden uit bekende games te tonen. Ik ben het sterk eens met zijn punt dat spelplezier belangrijker 
+is dan realisme, zoals bij het aanpassen van de zwaartekracht tijdens de val. Dit was voor mij een eye-opener, omdat ik dacht 
+dat een exacte simulatie van de werkelijkheid altijd het beste doel was voor een programmeur. Het motiveert me om meer te 
+leren over hoe wiskunde direct invloed heeft op de 'gameplay experience'.
+
+Conclusie;
+De video legt helder uit hoe wiskunde en spelgevoel samenkomen bij sprongmechanieken. De spreker bewijst dat slimme aanpassingen 
+aan natuurkundige wetten essentieel zijn voor een plezierige en responsieve game-ervaring.

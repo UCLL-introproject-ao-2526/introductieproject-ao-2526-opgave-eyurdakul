@@ -1,0 +1,17 @@
+<countries>
+    <country>
+        <name>Belgium</name>
+        <capital>Brussels</capital>
+        <population>11858610</population>
+    </country>
+    <country>
+        <name>Italy</name>
+        <capital>Rome</capital>
+        <population>58952704</population>
+    </country>
+    <country>
+        <name>France</name>
+        <capital>Paris</capital>
+        <population>68551653</population>
+    </country>
+</countries>
