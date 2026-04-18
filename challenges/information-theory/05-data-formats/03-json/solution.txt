@@ -1,0 +1,19 @@
+{
+    countries: [
+        {
+            "name":"Belgium",
+            "capital":"Brussels",
+            "population":11858610
+        },
+        {
+            "name":"Italy",
+            "capital":"Rome",
+            "population":58952704
+        },
+        {
+            "name":"France",
+            "capital":"Paris",
+            "population":68551653
+        }
+    ]
+}
