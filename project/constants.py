@@ -1,0 +1,11 @@
+WHITE = "white"
+BLACK = "black"
+GREEN = "green"
+RED = "red"
+BLUE = "blue"
+SCREEN_WIDTH = 600
+SCREEN_HEIGHT= 900
+FPS = 60
+DEFAULT_FONT = "freesansbold.ttf"
+FONT_SIZE_LARGE = 44
+FONT_SIZE_SMALL = 36

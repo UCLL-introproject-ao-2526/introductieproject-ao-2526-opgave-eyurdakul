@@ -1,6 +1,7 @@
 import copy
 import random
 import pygame
+import constants
 
 pygame.init()
 
@@ -8,14 +9,11 @@ cards = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
 one_deck = 4 * cards
 decks = 1
 game_deck = copy.deepcopy(decks * one_deck)
-WIDTH = 600
-HEIGHT = 900
-screen = pygame.display.set_mode([WIDTH, HEIGHT])
+screen = pygame.display.set_mode([constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT])
 pygame.display.set_caption("Pygame BlackJack")
-fps = 60
 timer = pygame.time.Clock()
-font = pygame.font.Font("freesansbold.ttf", 44)
-font_small = pygame.font.Font("freesansbold.ttf", 36)
+font = pygame.font.Font(constants.DEFAULT_FONT, constants.FONT_SIZE_LARGE)
+font_small = pygame.font.Font(constants.DEFAULT_FONT, constants.FONT_SIZE_SMALL)
 
 active = False
 records = [0, 0, 0]
@@ -29,9 +27,9 @@ reveal_dealer = False
 hand_active = False
 
 def create_button(coordinates, text, rect_value):
-    button = pygame.draw.rect(screen, "white", coordinates, 0, 5)
-    pygame.draw.rect(screen, "green", coordinates, 3, 5)
-    deal_text = font.render(text, True, "black")
+    button = pygame.draw.rect(screen, constants.WHITE, coordinates, 0, 5)
+    pygame.draw.rect(screen, constants.GREEN, coordinates, 3, 5)
+    deal_text = font.render(text, True, constants.BLACK)
     screen.blit(deal_text, rect_value)
     return button
 
@@ -42,15 +40,9 @@ def draw_game(active, records):
     else:
         buttons.append(create_button([0, 700, 300,100], "HIT ME", (55, 735)))
         buttons.append(create_button([300, 700, 300,100], "STAND", (355, 735)))
-        score_text = font_small.render(f"Wins: {records[0]}   Losses: {records[1]}   Draws: {records[2]}", True, "white")
+        score_text = font_small.render(f"Wins: {records[0]}   Losses: {records[1]}   Draws: {records[2]}", True, constants.WHITE)
         screen.blit(score_text, (15, 840))
     return buttons
-
-def hit_button_clicked():
-    print("HIT")
-
-def stand_button_clicked():
-    print("STAND")
 
 def deal_cards(hand, deck):
     card = random.randint(0, len(deck))
@@ -60,20 +52,20 @@ def deal_cards(hand, deck):
 
 def draw_cards(player, dealer, reveal):
     for i in range(len(player)):
-        pygame.draw.rect(screen, 'white', [70 + (70 * i), 460 + (5 * i), 120, 220], 0, 5)
-        screen.blit(font.render(player[i], True, 'black'), (75 + 70 * i, 465 + 5 * i))
-        screen.blit(font.render(player[i], True, 'black'), (75 + 70 * i, 635 + 5 * i))
-        pygame.draw.rect(screen, 'red', [70 + (70 * i), 460 + (5 * i), 120, 220], 5, 5)
+        pygame.draw.rect(screen, constants.WHITE, [70 + (70 * i), 460 + (5 * i), 120, 220], 0, 5)
+        screen.blit(font.render(player[i], True, constants.BLACK), (75 + 70 * i, 465 + 5 * i))
+        screen.blit(font.render(player[i], True, constants.BLACK), (75 + 70 * i, 635 + 5 * i))
+        pygame.draw.rect(screen, constants.RED, [70 + (70 * i), 460 + (5 * i), 120, 220], 5, 5)
 
     for i in range(len(dealer)):
-        pygame.draw.rect(screen, 'white', [70 + (70 * i), 160 + (5 * i), 120, 220], 0, 5)
+        pygame.draw.rect(screen, constants.WHITE, [70 + (70 * i), 160 + (5 * i), 120, 220], 0, 5)
         if i != 0 or reveal:
-            screen.blit(font.render(dealer[i], True, 'black'), (75 + 70 * i, 165 + 5 * i))
-            screen.blit(font.render(dealer[i], True, 'black'), (75 + 70 * i, 335 + 5 * i))
+            screen.blit(font.render(dealer[i], True, constants.BLACK), (75 + 70 * i, 165 + 5 * i))
+            screen.blit(font.render(dealer[i], True, constants.BLACK), (75 + 70 * i, 335 + 5 * i))
         else:
-            screen.blit(font.render('???', True, 'black'), (75 + 70 * i, 165 + 5 * i))
-            screen.blit(font.render('???', True, 'black'), (75 + 70 * i, 335 + 5 * i))
-        pygame.draw.rect(screen, 'blue', [70 + (70 * i), 160 + (5 * i), 120, 220], 5, 5)
+            screen.blit(font.render('???', True, constants.BLACK), (75 + 70 * i, 165 + 5 * i))
+            screen.blit(font.render('???', True, constants.BLACK), (75 + 70 * i, 335 + 5 * i))
+        pygame.draw.rect(screen, constants.BLUE, [70 + (70 * i), 160 + (5 * i), 120, 220], 5, 5)
 
 def calculate_score(hand):
     hand_score = 0
@@ -91,14 +83,14 @@ def calculate_score(hand):
     return hand_score
 
 def draw_scores(player, dealer):
-    screen.blit(font.render(f"Score[{player}]", True, "white"), (350, 400))
+    screen.blit(font.render(f"Score[{player}]", True, constants.WHITE), (350, 400))
     if reveal_dealer:
-        screen.blit(font.render(f"Score[{dealer}]", True, "white"), (350, 100))
+        screen.blit(font.render(f"Score[{dealer}]", True, constants.WHITE), (350, 100))
 
 run = True
 while run:
-    timer.tick(fps)
-    screen.fill("black")
+    timer.tick(constants.FPS)
+    screen.fill(constants.BLACK)
 
     if initial_deal:
         for i in range(2):
