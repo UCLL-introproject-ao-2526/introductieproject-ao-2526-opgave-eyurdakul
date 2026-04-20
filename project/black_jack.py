@@ -25,6 +25,8 @@ dealer_hand = []
 outcome = 0
 reveal_dealer = False
 hand_active = False
+add_score = False
+results = ["", "Player busted!", "Player wins!", "Dealer wins!", "Tie game!"]
 
 def create_button(coordinates, text, rect_value):
     button = pygame.draw.rect(screen, constants.WHITE, coordinates, 0, 5)
@@ -33,7 +35,7 @@ def create_button(coordinates, text, rect_value):
     screen.blit(deal_text, rect_value)
     return button
 
-def draw_game(active, records):
+def draw_game(active, records, result):
     buttons = []
     if not active:
         buttons.append(create_button([150, 20, 300, 100], "DEAL HAND", (165, 50)))
@@ -42,6 +44,9 @@ def draw_game(active, records):
         buttons.append(create_button([300, 700, 300,100], "STAND", (355, 735)))
         score_text = font_small.render(f"Wins: {records[0]}   Losses: {records[1]}   Draws: {records[2]}", True, constants.WHITE)
         screen.blit(score_text, (15, 840))
+    if result != 0:
+        screen.blit(font.render(results[result], True, constants.WHITE), (15, 25))
+        buttons.append(create_button([150, 220, 300, 100], "NEW HAND", (165, 250)))
     return buttons
 
 def deal_cards(hand, deck):
@@ -87,6 +92,27 @@ def draw_scores(player, dealer):
     if reveal_dealer:
         screen.blit(font.render(f"Score[{dealer}]", True, constants.WHITE), (350, 100))
 
+def check_endgame(hand_act, deal_score, play_score, result, totals, add):
+    if not hand_act and deal_score >= 17:
+        if play_score > 21:
+            result = 1
+        elif deal_score < play_score <= 21 or deal_score > 21:
+            result = 2
+        elif play_score < deal_score <= 21:
+            result = 3
+        else:
+            result = 4
+        if add:
+            if result == 1 or result == 3:
+                totals[1] += 1
+            elif result == 2:
+                totals[0] += 1
+            else:
+                totals[2] += 1
+            add = False 
+    return result, totals, add
+
+
 run = True
 while run:
     timer.tick(constants.FPS)
@@ -107,7 +133,8 @@ while run:
         draw_scores(player_score, dealer_score)
         draw_cards(my_hand, dealer_hand, reveal_dealer)
 
-    buttons = draw_game(active, records)
+    outcome, records, add_score = check_endgame(hand_active, dealer_score, player_score, outcome, records, add_score)
+    buttons = draw_game(active, records, outcome)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -122,10 +149,27 @@ while run:
                     dealer_hand = []
                     outcome = 0
                     hand_active = True
+                    add_score = True
             else:
                 if buttons[0].collidepoint(event.pos) and player_score < 21 and hand_active:
                     my_hand, game_deck = deal_cards(my_hand, game_deck)
                 elif buttons[1].collidepoint(event.pos) and not reveal_dealer:
                     reveal_dealer = True
                     hand_active = False
+                elif len(buttons) == 3:
+                    if buttons[2].collidepoint(event.pos):
+                        active = True
+                        initial_deal = True
+                        game_deck = copy.deepcopy(decks * one_deck)
+                        my_hand = []
+                        dealer_hand = []
+                        outcome = 0
+                        hand_active = True
+                        reveal_dealer = False
+                        add_score = True
+                        dealer_score = 0
+                        player_score = 0
+    if hand_active and player_score >= 21:
+        hand_active = False
+        reveal_dealer = True
     pygame.display.flip()
