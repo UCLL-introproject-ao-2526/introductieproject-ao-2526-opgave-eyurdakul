@@ -1,6 +1,7 @@
 WHITE = "white"
 BLACK = "black"
 GREEN = "green"
+TABLE_GREEN = (16, 102, 58)
 RED = "red"
 BLUE = "blue"
 SCREEN_WIDTH = 600
@@ -9,3 +10,5 @@ FPS = 60
 DEFAULT_FONT = "freesansbold.ttf"
 FONT_SIZE_LARGE = 44
 FONT_SIZE_SMALL = 36
+BORDER_RADIUS = 8
+RESULTS = ["", "Player busted!", "Player wins!", "Dealer wins!", "Tie game!"]

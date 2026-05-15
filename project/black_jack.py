@@ -3,6 +3,9 @@ import random
 import pygame
 import constants
 
+from enums import SoundLibrary
+from mixer import Mixer
+
 pygame.init()
 
 cards = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
@@ -26,11 +29,12 @@ outcome = 0
 reveal_dealer = False
 hand_active = False
 add_score = False
-results = ["", "Player busted!", "Player wins!", "Dealer wins!", "Tie game!"]
+
+mixer = Mixer(pygame.mixer)
 
 def create_button(coordinates, text, rect_value):
-    button = pygame.draw.rect(screen, constants.WHITE, coordinates, 0, 5)
-    pygame.draw.rect(screen, constants.GREEN, coordinates, 3, 5)
+    button = pygame.draw.rect(screen, constants.WHITE, coordinates, 0, constants.BORDER_RADIUS)
+    pygame.draw.rect(screen, constants.GREEN, coordinates, 3, constants.BORDER_RADIUS)
     deal_text = font.render(text, True, constants.BLACK)
     screen.blit(deal_text, rect_value)
     return button
@@ -45,7 +49,7 @@ def draw_game(active, records, result):
         score_text = font_small.render(f"Wins: {records[0]}   Losses: {records[1]}   Draws: {records[2]}", True, constants.WHITE)
         screen.blit(score_text, (15, 840))
     if result != 0:
-        screen.blit(font.render(results[result], True, constants.WHITE), (15, 25))
+        screen.blit(font.render(constants.RESULTS[result], True, constants.WHITE), (15, 25))
         buttons.append(create_button([150, 220, 300, 100], "NEW HAND", (165, 250)))
     return buttons
 
@@ -74,17 +78,13 @@ def draw_cards(player, dealer, reveal):
 
 def calculate_score(hand):
     hand_score = 0
-    for i in range(len(hand)):
-        for j in range(8):
-            if hand[i] == cards[j]:
-                hand_score += int(hand[i])
-        if hand[i] in ["10", "J", "Q", "K"]:
+    for card in hand:
+        if card in ['J', 'Q', 'K']:
             hand_score += 10
-        elif hand[i] == "A":
-            if hand_score <= 10:
-                hand_score += 11
-            else:
-                hand_score += 1
+        elif card == 'A':
+            hand_score = hand_score + 10 if (hand_score + 10) < 21 else hand_score + 1
+        else:
+            hand_score += int(card)
     return hand_score
 
 def draw_scores(player, dealer):
@@ -116,7 +116,7 @@ def check_endgame(hand_act, deal_score, play_score, result, totals, add):
 run = True
 while run:
     timer.tick(constants.FPS)
-    screen.fill(constants.BLACK)
+    screen.fill(constants.TABLE_GREEN)
 
     if initial_deal:
         for i in range(2):
@@ -142,6 +142,7 @@ while run:
         if event.type == pygame.MOUSEBUTTONUP:
             if not active:
                 if buttons[0].collidepoint(event.pos):
+                    mixer.play(SoundLibrary.SHUFFLE)
                     active = True
                     initial_deal = True
                     game_deck = copy.deepcopy(decks * one_deck)
@@ -153,14 +154,17 @@ while run:
             else:
                 if buttons[0].collidepoint(event.pos) and player_score < 21 and hand_active:
                     my_hand, game_deck = deal_cards(my_hand, game_deck)
+                    mixer.play(SoundLibrary.CARD)
                 elif buttons[1].collidepoint(event.pos) and not reveal_dealer:
                     reveal_dealer = True
                     hand_active = False
+                    mixer.play(SoundLibrary.CLICK)
                 elif len(buttons) == 3:
                     if buttons[2].collidepoint(event.pos):
                         active = True
                         initial_deal = True
                         game_deck = copy.deepcopy(decks * one_deck)
+                        mixer.play(SoundLibrary.SHUFFLE)
                         my_hand = []
                         dealer_hand = []
                         outcome = 0
