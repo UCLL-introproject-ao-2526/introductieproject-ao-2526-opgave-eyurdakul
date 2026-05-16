@@ -1,4 +1,19 @@
+import constants
+import random
+
+from card import Card
+from enums import Symbols
+
 class Deck:
-    
-    def __init__(self):
-        self.cards = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
+
+    def create(self):
+        self._deck = list()
+        self.ranks = list(constants.RANKS)
+        for symbol in Symbols:
+            for rank in self.ranks:
+                card = Card(rank, symbol)
+                self._deck.append(card)
+        random.shuffle(self._deck)
+
+    def deal(self):
+        return self._deck.pop()

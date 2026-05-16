@@ -12,3 +12,4 @@ FONT_SIZE_LARGE = 44
 FONT_SIZE_SMALL = 36
 BORDER_RADIUS = 8
 RESULTS = ["", "Player busted!", "Player wins!", "Dealer wins!", "Tie game!"]
+RANKS = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']

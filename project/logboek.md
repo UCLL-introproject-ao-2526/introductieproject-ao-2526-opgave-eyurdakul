@@ -21,4 +21,5 @@ Ik heb nog geenfeedbackontvangen van mijn docent en besloten verder te gaan met 
 ## 16 Mei 2026 07:45
 De gebruikersinterface was niet mooiafgewerkt. Ik heb depositie van deknoppen aangepast. Nu overlappen ze elkaar niet meer en ziet het er een stuk beter uit. Ik heb ook de kleuren van de knoppen aangepast om ze meer in lijn te brengen met het thema van mijn game. Daarnaast heb ik ook een achtergrondafbeelding toegevoegd om de visuele aantrekkingskracht van mijn game te vergroten.
 
-## 16 Mei 2026 11:20
+## 16 Mei 2026 08:43
+Ok nu begint het leuk te worden. Ik heb twee classen toegevoegd, Deck en Card. Nu heb ik een deck met twee private methodes, shuffle en geef een kaart. Ikzal de kaarten volledig apart houden van de gamelogica.
