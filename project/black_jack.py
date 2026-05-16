@@ -13,7 +13,7 @@ one_deck = 4 * cards
 decks = 1
 game_deck = copy.deepcopy(decks * one_deck)
 screen = pygame.display.set_mode([constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT])
-pygame.display.set_caption("Pygame BlackJack")
+pygame.display.set_caption('Pygame BlackJack')
 timer = pygame.time.Clock()
 font = pygame.font.Font(constants.DEFAULT_FONT, constants.FONT_SIZE_LARGE)
 font_small = pygame.font.Font(constants.DEFAULT_FONT, constants.FONT_SIZE_SMALL)
@@ -32,6 +32,9 @@ add_score = False
 
 mixer = Mixer(pygame.mixer)
 
+"""
+Helper methode for creating a standart button in the game
+"""
 def create_button(coordinates, text, rect_value):
     button = pygame.draw.rect(screen, constants.WHITE, coordinates, 0, constants.BORDER_RADIUS)
     pygame.draw.rect(screen, constants.GREEN, coordinates, 3, constants.BORDER_RADIUS)
@@ -39,26 +42,34 @@ def create_button(coordinates, text, rect_value):
     screen.blit(deal_text, rect_value)
     return button
 
+"""
+Creates buttons based on the game status
+"""
 def draw_game(active, records, result):
     buttons = []
     if not active:
-        buttons.append(create_button([150, 20, 300, 100], "DEAL HAND", (165, 50)))
+        buttons.append(create_button([150, 20, 295, 100], "DEAL HAND", (165, 50)))
     else:
-        buttons.append(create_button([0, 700, 300,100], "HIT ME", (55, 735)))
-        buttons.append(create_button([300, 700, 300,100], "STAND", (355, 735)))
-        score_text = font_small.render(f"Wins: {records[0]}   Losses: {records[1]}   Draws: {records[2]}", True, constants.WHITE)
+        buttons.append(create_button([0, 700, 295,100], "HIT ME", (55, 730)))
+        buttons.append(create_button([310, 700, 295,100], "STAND", (355, 730)))
+        score_text = font_small.render(f'Wins: {records[0]}   Losses: {records[1]}   Draws: {records[2]}', True, constants.WHITE)
         screen.blit(score_text, (15, 840))
     if result != 0:
         screen.blit(font.render(constants.RESULTS[result], True, constants.WHITE), (15, 25))
-        buttons.append(create_button([150, 220, 300, 100], "NEW HAND", (165, 250)))
+        buttons.append(create_button([150, 220, 295, 100], 'NEW HAND', (165, 250)))
     return buttons
 
-def deal_cards(hand, deck):
-    card = random.randint(0, len(deck))
-    hand.append(deck[card - 1])
-    deck.pop(card - 1)
-    return hand, deck
+"""
+Adds a single card to the hand
+"""
+def deal_cards(hand):
+    card = game_deck.pop()
+    hand.append(card)
+    return hand
 
+"""
+Draws the cards put on the table
+"""
 def draw_cards(player, dealer, reveal):
     for i in range(len(player)):
         pygame.draw.rect(screen, constants.WHITE, [70 + (70 * i), 460 + (5 * i), 120, 220], 0, 5)
@@ -76,6 +87,9 @@ def draw_cards(player, dealer, reveal):
             screen.blit(font.render('???', True, constants.BLACK), (75 + 70 * i, 335 + 5 * i))
         pygame.draw.rect(screen, constants.BLUE, [70 + (70 * i), 160 + (5 * i), 120, 220], 5, 5)
 
+"""
+Calculates the score of a hand based on Blackjack rules
+"""
 def calculate_score(hand):
     hand_score = 0
     for card in hand:
@@ -87,11 +101,17 @@ def calculate_score(hand):
             hand_score += int(card)
     return hand_score
 
+"""
+Draws the current score on screen
+"""
 def draw_scores(player, dealer):
-    screen.blit(font.render(f"Score[{player}]", True, constants.WHITE), (350, 400))
+    screen.blit(font.render(f'Score: {player}', True, constants.WHITE), (350, 400))
     if reveal_dealer:
-        screen.blit(font.render(f"Score[{dealer}]", True, constants.WHITE), (350, 100))
+        screen.blit(font.render(f'Score: {dealer}', True, constants.WHITE), (350, 100))
 
+"""
+Based on the status of the game, players hand and the dealers hand, checks whether the player wins or loses
+"""
 def check_endgame(hand_act, deal_score, play_score, result, totals, add):
     if not hand_act and deal_score >= 17:
         if play_score > 21:
@@ -119,9 +139,10 @@ while run:
     screen.fill(constants.TABLE_GREEN)
 
     if initial_deal:
+        random.shuffle(game_deck)
         for i in range(2):
-              my_hand, game_deck = deal_cards(my_hand, game_deck)
-              dealer_hand, game_deck = deal_cards(dealer_hand, game_deck)
+              my_hand = deal_cards(my_hand)
+              dealer_hand = deal_cards(dealer_hand)
         initial_deal = False
 
     if active:
@@ -129,7 +150,7 @@ while run:
         if reveal_dealer:
             dealer_score = calculate_score(dealer_hand)
             if dealer_score < 17:
-                dealer_hand, game_deck = deal_cards(dealer_hand, game_deck)
+                dealer_hand = deal_cards(dealer_hand)
         draw_scores(player_score, dealer_score)
         draw_cards(my_hand, dealer_hand, reveal_dealer)
 
@@ -153,7 +174,7 @@ while run:
                     add_score = True
             else:
                 if buttons[0].collidepoint(event.pos) and player_score < 21 and hand_active:
-                    my_hand, game_deck = deal_cards(my_hand, game_deck)
+                    my_hand = deal_cards(my_hand)
                     mixer.play(SoundLibrary.CARD)
                 elif buttons[1].collidepoint(event.pos) and not reveal_dealer:
                     reveal_dealer = True
