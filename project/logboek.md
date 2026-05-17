@@ -23,3 +23,9 @@ De gebruikersinterface was niet mooiafgewerkt. Ik heb depositie van deknoppen aa
 
 ## 16 Mei 2026 08:43
 Ok nu begint het leuk te worden. Ik heb twee classen toegevoegd, Deck en Card. Nu heb ik een deck met twee private methodes, shuffle en geef een kaart. Ikzal de kaarten volledig apart houden van de gamelogica.
+
+## 17 Mei 2026 09:04
+De belangrijkste wijziging is, een card class heeft nu ook een symbol property. De volgende stap is, een kaart tekenen met symbol. Ik moet nog beslissien of ik dit inCard class wil doen of in een aparte class. Ik denk dat het beter is om dit in een aparte class te doen, zodat ik de kaartlogica gescheiden kan houden van de weergave logica. Ik zal een CardRenderer class maken die verantwoordelijk is voor het tekenen van de kaarten op het scherm. Deze class zal gebruik maken van de symbol property van de Card class om de juiste afbeelding te selecteren voor elke kaart.
+
+## 17 Mei 2026 10:34
+Nu worden de kaartjes netjes getekend op het scherm. Ik heb een paar kleine bugs opgelost die ervoor zorgden dat de kaarten niet correct werden weergegeven.

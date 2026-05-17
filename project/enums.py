@@ -1,7 +1,7 @@
 from enum import Enum
 
 class Symbols(Enum):
-    HEART = 1
+    HEARTS = 1
     DIAMONDS = 2
     SPADES = 3
     CLUBS = 4

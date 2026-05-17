@@ -4,6 +4,7 @@ import constants
 from enums import SoundLibrary
 from mixer import Mixer
 from deck import Deck
+from renderer import Renderer
 
 pygame.init()
 
@@ -27,6 +28,7 @@ add_score = False
 
 mixer = Mixer(pygame.mixer)
 game_deck = Deck()
+renderer = Renderer(screen)
 
 """
 Helper methode for creating a standart button in the game
@@ -60,20 +62,9 @@ Draws the cards put on the table
 """
 def draw_cards(player, dealer, reveal):
     for i in range(len(player)):
-        pygame.draw.rect(screen, constants.WHITE, [70 + (70 * i), 460 + (5 * i), 120, 220], 0, 5)
-        screen.blit(font.render(player[i].text, True, constants.BLACK), (75 + 70 * i, 465 + 5 * i))
-        screen.blit(font.render(player[i].text, True, constants.BLACK), (75 + 70 * i, 635 + 5 * i))
-        pygame.draw.rect(screen, constants.RED, [70 + (70 * i), 460 + (5 * i), 120, 220], 5, 5)
-
+        renderer.draw_card(player[i], 70 + (70 * i), 460 + (5 * i))
     for i in range(len(dealer)):
-        pygame.draw.rect(screen, constants.WHITE, [70 + (70 * i), 160 + (5 * i), 120, 220], 0, 5)
-        if i != 0 or reveal:
-            screen.blit(font.render(dealer[i].text, True, constants.BLACK), (75 + 70 * i, 165 + 5 * i))
-            screen.blit(font.render(dealer[i].text, True, constants.BLACK), (75 + 70 * i, 335 + 5 * i))
-        else:
-            screen.blit(font.render('???', True, constants.BLACK), (75 + 70 * i, 165 + 5 * i))
-            screen.blit(font.render('???', True, constants.BLACK), (75 + 70 * i, 335 + 5 * i))
-        pygame.draw.rect(screen, constants.BLUE, [70 + (70 * i), 160 + (5 * i), 120, 220], 5, 5)
+        renderer.draw_card(dealer[i], 70 + (70 * i), 160 + (5 * i), (i != 0 or reveal))
 
 """
 Calculates the score of a hand based on Blackjack rules
@@ -154,6 +145,7 @@ while run:
         if event.type == pygame.MOUSEBUTTONUP:
             if not active:
                 if buttons[0].collidepoint(event.pos):
+                    mixer.play(SoundLibrary.CLICK)
                     mixer.play(SoundLibrary.SHUFFLE)
                     active = True
                     initial_deal = True
@@ -170,7 +162,7 @@ while run:
                 elif buttons[1].collidepoint(event.pos) and not reveal_dealer:
                     reveal_dealer = True
                     hand_active = False
-                    mixer.play(SoundLibrary.CLICK)
+                    mixer.play(SoundLibrary.CHIP)
                 elif len(buttons) == 3:
                     if buttons[2].collidepoint(event.pos):
                         active = True
