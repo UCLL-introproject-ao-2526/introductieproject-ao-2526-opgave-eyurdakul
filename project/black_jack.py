@@ -2,7 +2,7 @@ import pygame
 import os
 import constants
 
-from settings import SCREEN_WIDTH, SCREEN_HEIGHT, BUTTON_WIDTH
+from settings import SCREEN_WIDTH, SCREEN_HEIGHT, BUTTON_WIDTH, FPS
 from enums import SoundLibrary
 from mixer import Mixer
 from deck import Deck
@@ -16,6 +16,7 @@ timer = pygame.time.Clock()
 font_path = os.path.join('assets', constants.DEFAULT_FONT)
 font = pygame.font.Font(font_path, constants.FONT_SIZE_LARGE)
 font_small = pygame.font.Font(font_path, constants.FONT_SIZE_SMALL)
+background_image = pygame.image.load(os.path.join('assets', 'background.jpeg')).convert()
 
 active = False
 records = [0, 0, 0]
@@ -47,13 +48,17 @@ Creates buttons based on the game status
 def draw_game(active, records, result):
     buttons = []
     if not active:
-        buttons.append(renderer.draw_button(font, calculate_button_x_position(1), 20, "DEAL HAND"))
+        buttons.append(renderer.draw_button(font, calculate_button_x_position(1), 20, 'DEAL HAND'))
     else:
-        buttons.append(renderer.draw_button(font, calculate_button_x_position(2, 1), 700, "HIT ME"))
-        buttons.append(renderer.draw_button(font, calculate_button_x_position(2, 2), 700, "STAND"))
+        buttons.append(renderer.draw_button(font, calculate_button_x_position(2, 1), 700, 'HIT ME'))
+        buttons.append(renderer.draw_button(font, calculate_button_x_position(2, 2), 700, 'STAND'))
         score_text = font_small.render(f'Wins: {records[0]}   Losses: {records[1]}   Draws: {records[2]}', True, constants.WHITE)
         screen.blit(score_text, (15, 840))
     if result != 0:
+        if result == 1:
+            mixer.play(SoundLibrary.LOSE)
+        elif result == 2:
+            mixer.play(SoundLibrary.WIN)
         screen.blit(font.render(constants.RESULTS[result], True, constants.WHITE), (15, 25))
         buttons.append(renderer.draw_button(font, calculate_button_x_position(1), 220, 'NEW HAND'))
     return buttons
@@ -118,8 +123,8 @@ def check_endgame(hand_act, deal_score, play_score, result, totals, add):
 
 run = True
 while run:
-    timer.tick(constants.FPS)
-    screen.fill(constants.TABLE_GREEN)
+    timer.tick(FPS)
+    screen.blit(background_image, (0, 0))
 
     if initial_deal:
         game_deck.create()

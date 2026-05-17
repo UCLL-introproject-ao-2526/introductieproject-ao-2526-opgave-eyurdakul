@@ -32,3 +32,6 @@ Nu worden de kaartjes netjes getekend op het scherm. Ik heb een paar kleine bugs
 
 ## 17 Mei 2026 11:32
 De buttons worden nu ook netjes weergegeven in het spelletje maar ik wil eigenlijk de positie van de buttons zelf berekenen in plaats van harcoded waardes te gebruiken. Ik ga een methode schrijven die de positie van de buttons berekent op basis van het aantal buttons en de grootte van het scherm. Op deze manier kan ik gemakkelijk nieuwe buttons toevoegen zonder dat ik me zorgen hoef te maken over de positionering ervan.
+
+## 17 Mei 2026 20:29
+De code van tutorials is grotendeels opgekuist. Er zijn nog altijd een paar zaken die ikstorendvind,zoals result ende buttons ineenarray stekenmaar het resultaat istoch stuk beter. Ik denk dat ik klaar benvoor de evaluatie. Er zijn nog eenpaarzaken dieik zil toevoegen maar weet niet goed ofhetkan. Dus na deze als er geenandere commits zijn op mijn logboek, is het niet gelukt.

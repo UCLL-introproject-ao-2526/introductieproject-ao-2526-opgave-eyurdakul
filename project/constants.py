@@ -6,7 +6,6 @@ GOLD = (197, 160, 89)
 GOLD_LIGHT = (244, 215, 94)
 RED = "red"
 BLUE = "blue"
-FPS = 60
 DEFAULT_FONT = 'casino_font.otf'
 FONT_SIZE_LARGE = 44
 FONT_SIZE_SMALL = 36
