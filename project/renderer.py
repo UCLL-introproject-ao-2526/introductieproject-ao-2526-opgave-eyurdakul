@@ -10,7 +10,7 @@ class Renderer:
 
         background_path = os.path.join('assets', 'card_background.png')
         self._card_back = pygame.image.load(background_path).convert_alpha()
-        self._card_back = pygame.transform.scale(self._card_back, (CARD_WIDTH, CARD_HEIGHT))
+        self._card_back = pygame.transform.scale(self._card_back, (CARD_WIDTH - 10, CARD_HEIGHT - 10))
 
         self._suit_images = {
             1: pygame.image.load(os.path.join('assets/suits', 'hearts.png')).convert_alpha(),
@@ -46,4 +46,4 @@ class Renderer:
             self._screen.blit(rank_text, (x + CARD_WIDTH - 20, y + CARD_HEIGHT - 40))
             self._screen.blit(suit_img, (x + CARD_WIDTH - 20, y + CARD_HEIGHT - 20))
         else:
-            self._screen.blit(self._card_back, (x, y))
+            self._screen.blit(self._card_back, (x + 5, y + 5))
