@@ -28,4 +28,7 @@ Ok nu begint het leuk te worden. Ik heb twee classen toegevoegd, Deck en Card. N
 De belangrijkste wijziging is, een card class heeft nu ook een symbol property. De volgende stap is, een kaart tekenen met symbol. Ik moet nog beslissien of ik dit inCard class wil doen of in een aparte class. Ik denk dat het beter is om dit in een aparte class te doen, zodat ik de kaartlogica gescheiden kan houden van de weergave logica. Ik zal een CardRenderer class maken die verantwoordelijk is voor het tekenen van de kaarten op het scherm. Deze class zal gebruik maken van de symbol property van de Card class om de juiste afbeelding te selecteren voor elke kaart.
 
 ## 17 Mei 2026 10:34
-Nu worden de kaartjes netjes getekend op het scherm. Ik heb een paar kleine bugs opgelost die ervoor zorgden dat de kaarten niet correct werden weergegeven.
+Nu worden de kaartjes netjes getekend op het scherm. Ik heb een paar kleine bugs opgelost die ervoor zorgden dat de kaarten niet correct werden weergegeven. Als we eenvierkant willen tekenen en er ontbreken bepaalde parameters, moeten we expliciet meegeven welke parameter het is (bv. mijn_methode(100, 200, width=200)).
+
+## 17 Mei 2026 11:32
+De buttons worden nu ook netjes weergegeven in het spelletje maar ik wil eigenlijk de positie van de buttons zelf berekenen in plaats van harcoded waardes te gebruiken. Ik ga een methode schrijven die de positie van de buttons berekent op basis van het aantal buttons en de grootte van het scherm. Op deze manier kan ik gemakkelijk nieuwe buttons toevoegen zonder dat ik me zorgen hoef te maken over de positionering ervan.

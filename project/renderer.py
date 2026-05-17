@@ -1,7 +1,7 @@
 import pygame
 import os
-from settings import CARD_WIDTH, CARD_HEIGHT
-from constants import BORDER_RADIUS
+from settings import CARD_WIDTH, CARD_HEIGHT, BUTTON_HEIGHT, BUTTON_WIDTH
+from constants import BORDER_RADIUS, BLACK, GOLD, GOLD_LIGHT
 
 class Renderer:
     def __init__(self, screen):
@@ -47,3 +47,12 @@ class Renderer:
             self._screen.blit(suit_img, (x + CARD_WIDTH - 20, y + CARD_HEIGHT - 20))
         else:
             self._screen.blit(self._card_back, (x + 5, y + 5))
+
+    def draw_button(self, font, x, y, text):
+        button = pygame.draw.rect(self._screen, GOLD, [x, y, BUTTON_WIDTH, BUTTON_HEIGHT], width=0, border_radius=BORDER_RADIUS)
+        pygame.draw.rect(self._screen, GOLD_LIGHT, [x, y, BUTTON_WIDTH, BUTTON_HEIGHT], width=3, border_radius=BORDER_RADIUS)
+        button_text = font.render(text, True, BLACK)
+        x_gap = (BUTTON_WIDTH - button_text.get_width()) / 2
+        y_gap = (BUTTON_HEIGHT - button_text.get_height()) / 2
+        self._screen.blit(button_text, (x + x_gap, y + y_gap))
+        return button

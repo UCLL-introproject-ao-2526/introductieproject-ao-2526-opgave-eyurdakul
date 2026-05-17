@@ -1,6 +1,8 @@
 import pygame
+import os
 import constants
 
+from settings import SCREEN_WIDTH, SCREEN_HEIGHT, BUTTON_WIDTH
 from enums import SoundLibrary
 from mixer import Mixer
 from deck import Deck
@@ -8,11 +10,12 @@ from renderer import Renderer
 
 pygame.init()
 
-screen = pygame.display.set_mode([constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT])
+screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
 pygame.display.set_caption('Pygame BlackJack')
 timer = pygame.time.Clock()
-font = pygame.font.Font(constants.DEFAULT_FONT, constants.FONT_SIZE_LARGE)
-font_small = pygame.font.Font(constants.DEFAULT_FONT, constants.FONT_SIZE_SMALL)
+font_path = os.path.join('assets', constants.DEFAULT_FONT)
+font = pygame.font.Font(font_path, constants.FONT_SIZE_LARGE)
+font_small = pygame.font.Font(font_path, constants.FONT_SIZE_SMALL)
 
 active = False
 records = [0, 0, 0]
@@ -31,14 +34,12 @@ game_deck = Deck()
 renderer = Renderer(screen)
 
 """
-Helper methode for creating a standart button in the game
+Helper methode for calculating the button position
 """
-def create_button(coordinates, text, rect_value):
-    button = pygame.draw.rect(screen, constants.WHITE, coordinates, 0, constants.BORDER_RADIUS)
-    pygame.draw.rect(screen, constants.GREEN, coordinates, 3, constants.BORDER_RADIUS)
-    deal_text = font.render(text, True, constants.BLACK)
-    screen.blit(deal_text, rect_value)
-    return button
+def calculate_button_x_position(count, position=1):
+    button_space = count * BUTTON_WIDTH
+    gap_size = (SCREEN_WIDTH - button_space) / (count + 1)
+    return (gap_size * position) + (BUTTON_WIDTH * (position - 1))
 
 """
 Creates buttons based on the game status
@@ -46,15 +47,15 @@ Creates buttons based on the game status
 def draw_game(active, records, result):
     buttons = []
     if not active:
-        buttons.append(create_button([150, 20, 295, 100], "DEAL HAND", (165, 50)))
+        buttons.append(renderer.draw_button(font, calculate_button_x_position(1), 20, "DEAL HAND"))
     else:
-        buttons.append(create_button([0, 700, 295,100], "HIT ME", (55, 730)))
-        buttons.append(create_button([310, 700, 295,100], "STAND", (355, 730)))
+        buttons.append(renderer.draw_button(font, calculate_button_x_position(2, 1), 700, "HIT ME"))
+        buttons.append(renderer.draw_button(font, calculate_button_x_position(2, 2), 700, "STAND"))
         score_text = font_small.render(f'Wins: {records[0]}   Losses: {records[1]}   Draws: {records[2]}', True, constants.WHITE)
         screen.blit(score_text, (15, 840))
     if result != 0:
         screen.blit(font.render(constants.RESULTS[result], True, constants.WHITE), (15, 25))
-        buttons.append(create_button([150, 220, 295, 100], 'NEW HAND', (165, 250)))
+        buttons.append(renderer.draw_button(font, calculate_button_x_position(1), 220, 'NEW HAND'))
     return buttons
 
 """
