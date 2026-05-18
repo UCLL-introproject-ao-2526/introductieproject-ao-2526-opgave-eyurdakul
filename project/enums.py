@@ -13,3 +13,9 @@ class SoundLibrary(Enum):
     LOSE = 4
     CLICK = 5
     SHUFFLE = 6
+
+class Result(Enum):
+    PLAYER_ABOVE_21 = 1
+    PLAYER_WINS = 2
+    DEALER_WINS = 3
+    TIE_GAME = 4

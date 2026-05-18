@@ -35,3 +35,6 @@ De buttons worden nu ook netjes weergegeven in het spelletje maar ik wil eigenli
 
 ## 17 Mei 2026 20:29
 De code van tutorials is grotendeels opgekuist. Er zijn nog altijd een paar zaken die ikstorendvind,zoals result ende buttons ineenarray stekenmaar het resultaat istoch stuk beter. Ik denk dat ik klaar benvoor de evaluatie. Er zijn nog eenpaarzaken dieik zil toevoegen maar weet niet goed ofhetkan. Dus na deze als er geenandere commits zijn op mijn logboek, is het niet gelukt.
+
+# 18 Mei 2026 22:53
+Ik ben vandaag de hele dag bezig geweest met AI implementatie. Er zijn dus twee libraries waarvan ik gebruik heb gemaakt, gtts en anthropic. Voorlopig werktalles. Ik stuur een prompt naar Claude met scores en de kaarten en krijg een response terug. Response wordt dan uitgelezen doorgttis text to speech engine. Ik vond weleen leuke feature maar we zullen zien of mijn docent dit ook leuk vindt, waarschijnlijk niet maar ik doe het toch.

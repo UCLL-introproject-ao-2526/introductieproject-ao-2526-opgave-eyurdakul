@@ -4,9 +4,11 @@ import constants
 
 from settings import SCREEN_WIDTH, SCREEN_HEIGHT, BUTTON_WIDTH, FPS
 from enums import SoundLibrary
+from enums import Result
 from mixer import Mixer
 from deck import Deck
 from renderer import Renderer
+from dealer import Dealer
 
 pygame.init()
 
@@ -33,6 +35,7 @@ add_score = False
 mixer = Mixer(pygame.mixer)
 game_deck = Deck()
 renderer = Renderer(screen)
+ai_dealer = Dealer()
 
 """
 Helper methode for calculating the button position
@@ -55,10 +58,6 @@ def draw_game(active, records, result):
         score_text = font_small.render(f'Wins: {records[0]}   Losses: {records[1]}   Draws: {records[2]}', True, constants.WHITE)
         screen.blit(score_text, (15, 840))
     if result != 0:
-        if result == 1:
-            mixer.play(SoundLibrary.LOSE)
-        elif result == 2:
-            mixer.play(SoundLibrary.WIN)
         screen.blit(font.render(constants.RESULTS[result], True, constants.WHITE), (15, 25))
         buttons.append(renderer.draw_button(font, calculate_button_x_position(1), 220, 'NEW HAND'))
     return buttons
@@ -100,7 +99,7 @@ def draw_scores(player, dealer):
 """
 Based on the status of the game, players hand and the dealers hand, checks whether the player wins or loses
 """
-def check_endgame(hand_act, deal_score, play_score, result, totals, add):
+def check_endgame(hand_act, deal_score, play_score, result, totals, add, player_hand, dealer_hand):
     if not hand_act and deal_score >= 17:
         if play_score > 21:
             result = 1
@@ -113,11 +112,18 @@ def check_endgame(hand_act, deal_score, play_score, result, totals, add):
         if add:
             if result == 1 or result == 3:
                 totals[1] += 1
+                mixer.play(SoundLibrary.LOSE)
             elif result == 2:
                 totals[0] += 1
+                mixer.play(SoundLibrary.WIN)
             else:
                 totals[2] += 1
             add = False 
+
+            if not ai_dealer.ai_said_game_over:
+                status = Result(result)
+                ai_dealer.ai_said_game_over = True
+                ai_dealer.generate_and_speak_taunt(player_hand, dealer_hand, play_score, deal_score, status.name)
     return result, totals, add
 
 
@@ -132,6 +138,10 @@ while run:
               my_hand.append(game_deck.deal())
               dealer_hand.append(game_deck.deal())
         initial_deal = False
+        player_score = calculate_score(my_hand)
+        dealer_score = calculate_score(dealer_hand)
+        ai_dealer.generate_and_speak_taunt(my_hand, dealer_hand, player_score, dealer_score, 'initial_deal')
+        ai_dealer.ai_said_game_over = False
 
     if active:
         player_score = calculate_score(my_hand)
@@ -142,7 +152,7 @@ while run:
         draw_scores(player_score, dealer_score)
         draw_cards(my_hand, dealer_hand, reveal_dealer)
 
-    outcome, records, add_score = check_endgame(hand_active, dealer_score, player_score, outcome, records, add_score)
+    outcome, records, add_score = check_endgame(hand_active, dealer_score, player_score, outcome, records, add_score, my_hand, dealer_hand)
     buttons = draw_game(active, records, outcome)
 
     for event in pygame.event.get():
@@ -162,13 +172,17 @@ while run:
                     hand_active = True
                     add_score = True
             else:
+                new_score = calculate_score(my_hand)
+                dealer_score = calculate_score(dealer_hand)
                 if buttons[0].collidepoint(event.pos) and player_score < 21 and hand_active:
                     my_hand.append(game_deck.deal())
                     mixer.play(SoundLibrary.CARD)
+                    ai_dealer.generate_and_speak_taunt(my_hand, dealer_hand, new_score, dealer_score, "player_hit")
                 elif buttons[1].collidepoint(event.pos) and not reveal_dealer:
                     reveal_dealer = True
                     hand_active = False
                     mixer.play(SoundLibrary.CHIP)
+                    ai_dealer.generate_and_speak_taunt(my_hand, dealer_hand, new_score, dealer_score, "player_stand")
                 elif len(buttons) == 3:
                     if buttons[2].collidepoint(event.pos):
                         active = True
