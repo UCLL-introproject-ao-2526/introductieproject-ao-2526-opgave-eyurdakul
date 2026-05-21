@@ -55,7 +55,7 @@ class Dealer:
                 f'You can see your hand here {dealer_cards} and player has the following cards {player_cards}'
                 f'Current situation: The player has {player_score} points. You (the dealer) have {dealer_score} points showing. '
                 f'The exact game event triggering this is: {status}.'
-                f'Keep your andwer shorter than 140 chars and use only letters and numbers. No emojis or symbols.'
+                f'Keep your andwer shorter than 100 chars and use only letters and numbers. No emojis or symbols.'
             )
 
             message = self.client.messages.create(

@@ -1,0 +1,23 @@
+Dag Daan,
+
+Mijn naam is Ejder Yurdakul, student Toegepaste Informatica (AO) aan de UCLL. Ik stuur u deze mail 
+om graag mijn feedback met u te delen over het introductieproject.
+
+De challenges waren over het algemeen heel duidelijk. Sommige opdrachten heb ik helaas moeten overslaan 
+omdat ik er niet helemaal uitkwam. Vooral de VSCode challenges waren lastig voor mij, aangezien ik nog 
+niet veel ervaring heb met dit programma. Ook de Regex-vragen waren erg uitdagend, maar met behulp van 
+de website Regex101 heb ik het overgrote deel uiteindelijk toch kunnen oplossen. Wel merkte ik dat de backend, 
+die de antwoorden verifieert, bij sommige challenges erg streng en hoofdlettergevoelig was. Na een aantal 
+pogingen is het gelukkig wel gelukt om de juiste antwoorden te vinden.
+
+Een paar challenges kreeg ik helaas niet opgelost, met de Moonlanding challenge als voorbeeld. Ik heb hiervoor 
+verschillende bronnen geraadpleegd, waaronder Wikipedia, maar de test bleef mijn antwoord weigeren. Volgens de 
+bronnen ondersteunt de Apollo Guidance Computer 8 jobs en 9 tasks. Ik heb alle combinaties geprobeerd (8, 9 en 17), 
+maar ik kreeg helaas geen groen licht.
+
+Tot slot wil ik nog meegeven dat ik het erg leuk vond om aan dit project te werken. 
+Het bevatte ontzettend veel interessante leerstof.
+
+Met vriendelijke groeten,
+Ejder Yurdakul / r1132977
+Student UCLL Toegepaste Informatica AO
