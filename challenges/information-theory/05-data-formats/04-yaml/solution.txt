@@ -1,12 +1,9 @@
-- country:
-    name: Belgium
-    capital: Brussels
-    population: 11858610
-- country:
-    name: Italy
-    capital: Rome
-    population: 58952704
-- country:
-    name: France
-    capital: Paris
-    population: 68551653
+- country: France
+  capital: Paris
+  population: 69
+- country: Belgium
+  capital: Brussels
+  population: 12
+- country: Netherlands
+  capital: Amsterdam
+  population: 17
